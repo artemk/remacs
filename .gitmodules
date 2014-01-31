@@ -43,7 +43,12 @@
 [submodule "plugins/jump"]
 	path = plugins/jump
 	url = git://github.com/eschulte/jump.el.git
-
+[submodule "plugins/projectile"]
+	path = plugins/projectile
+	url = git://github.com/bbatsov/projectile.git
+[submodule "plugins/ack-and-a-half"]
+	path = plugins/ack-and-a-half
+	url = git://github.com/jhelwig/ack-and-a-half.git
 [submodule "plugins/tabbar"]
 	path = plugins/tabbar
 	url = git://github.com/dholm/tabbar.git

@@ -1,1 +1,1 @@
-("~/projects/apptopia/boglach/" "~/.emacs.d/" "~/projects/apptopia/apptopia/")
+("/Volumes/work/current/boglach/" "~/.emacs.d/" "/Volumes/work/current/epf_server/" "/Volumes/work/current/chef-repo/" "/Volumes/work/current/comparsports_front/" "/Volumes/work/current/Apptop/" "~/.emacs.d/plugins/nxhtml/" "~/.emacs.d/plugins/tabbar/" "~/projects/apptopia/boglach/" "~/projects/apptopia/apptopia/")

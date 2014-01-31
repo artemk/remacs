@@ -38,12 +38,16 @@
 (setq gc-cons-threshold 20000000)
 
 ; slim-mode
-(add-to-list 'load-path "~/.emacs.d/plugins/emacs-slim")
-(require 'slim-mode)
+;;(add-to-list 'load-path "~/.emacs.d/plugins/emacs-slim")
+;;(require 'slim-mode)
 
 ; tabbar mode
 (add-to-list 'load-path "~/.emacs.d/plugins/tabbar")
 (require 'tabbar)
+
+ (global-set-key (kbd "C-c <left>") 'tabbar-backward-tab)
+ (global-set-key (kbd "C-c <right>") 'tabbar-forward-tab)
+ (global-set-key (kbd "C-c .") 'tabbar-forward-group)
 
 ; jump-mode
 (add-to-list 'load-path "~/.emacs.d/plugins/jump")
@@ -229,3 +233,62 @@
 
 ; fullscreen toggle
 (global-set-key (kbd "C-M-`") 'ns-toggle-fullscreen)
+
+;; smarter begin of line
+(defun smarter-move-beginning-of-line (arg)
+  "Move point back to indentation of beginning of line.
+
+Move point to the first non-whitespace character on this line.
+If point is already there, move to the beginning of the line.
+Effectively toggle between the first non-whitespace character and
+the beginning of the line.
+
+If ARG is not nil or 1, move forward ARG - 1 lines first.  If
+point reaches the beginning or end of the buffer, stop there."
+  (interactive "^p")
+  (setq arg (or arg 1))
+
+  ;; Move lines first
+  (when (/= arg 1)
+    (let ((line-move-visual nil))
+      (forward-line (1- arg))))
+
+  (let ((orig-point (point)))
+    (back-to-indentation)
+    (when (= orig-point (point))
+      (move-beginning-of-line 1))))
+
+;; remap C-a to `smarter-move-beginning-of-line'
+(global-set-key [remap move-beginning-of-line]
+                'smarter-move-beginning-of-line)
+
+; comment/uncommente
+(global-set-key "\C-ck" 'kill-whole-line)
+(global-set-key (kbd"\C-c#") 'comment-or-uncomment-region)
+
+
+; projectile
+(add-to-list 'load-path "~/emacs.d/plugins/projectile")
+(require 'projectile)
+(add-hook 'ruby-mode-hook 'projectile-on)
+(projectile-global-on)
+
+(require 'ack-and-a-half)
+;; Create shorter aliases
+(defalias 'ack 'ack-and-a-half)
+(defalias 'ack-same 'ack-and-a-half-same)
+(defalias 'ack-find-file 'ack-and-a-half-find-file)
+(defalias 'ack-find-file-same 'ack-and-a-half-find-file-same)
+
+; save session from one emacs session to next
+(desktop-save-mode 1)
+
+
+(defun touch ()
+     "updates mtime on the file for the current buffer"
+     (interactive)
+     (shell-command (concat "touch " (shell-quote-argument (buffer-file-name))))
+     (clear-visited-file-modtime))
+
+(global-set-key (kbd"\C-c t") 'touch)
+(put 'dired-find-alternate-file 'disabled nil)
